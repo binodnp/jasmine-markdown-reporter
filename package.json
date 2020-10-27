@@ -1,0 +1,35 @@
+{
+  "name": "jasmine-markdown-reporter",
+  "version": "1.0.0",
+  "description": "Jasmine Markdown Reporter",
+  "main": "index.js",
+  "scripts": {
+    "standard": "standard || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binodnp/jasmine-markdown-reporter.git"
+  },
+  "keywords": [
+    "jasmine",
+    "tdd",
+    "test",
+    "unit-test",
+    "integration-test",
+    "bdd",
+    "spec",
+    "report",
+    "markdown",
+    "reporter",
+    "github"
+  ],
+  "author": "Binod Nirvan <binodnp@outlook.com> (https://linkedin.com/in/binodnirvan/)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/binodnp/jasmine-markdown-reporter/issues"
+  },
+  "homepage": "https://github.com/binodnp/jasmine-markdown-reporter#readme",
+  "devDependencies": {
+    "standard": "^15.0.0"
+  }
+}

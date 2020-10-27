@@ -1,0 +1,12 @@
+{
+  "duration": "Duration",
+  "failed": "Failed",
+  "passed": "Passed",
+  "suite": "Suite",
+  "suites": "Suites",
+  "specs": "Specs",
+  "summary": "Summary",
+  "status": "Status",
+  "title": "Jasmine Test Result",
+  "whatFailed": "What Failed?"
+}

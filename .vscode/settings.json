@@ -1,0 +1,14 @@
+{
+    "javascript.suggestionActions.enabled": false,
+    "standard.usePackageJson": true,
+    "editor.mouseWheelZoom": true,
+    "standard.autoFixOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "json.format.enable": true,
+    "[json]": {
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "editor.formatOnSaveMode": "file"
+    }
+}
