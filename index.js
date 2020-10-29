@@ -23,9 +23,7 @@ class MarkdownReporter {
     this.options = options || {}
 
     if (!this.options.destination) {
-      const pathToRoot = path.join(process.cwd())
-      const destination = path.resolve(path.join(pathToRoot, 'story.md'))
-
+      const destination = path.resolve(path.join(process.cwd(), 'story.md'))
       this.options.destination = destination
     }
 
