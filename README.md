@@ -17,7 +17,8 @@ global.jasmine.getEnv().clearReporters()
 
 global.jasmine.getEnv().addReporter(new MarkdownReporter({
   title: 'Jasmine Test Results',
-  destination: path.join(process.cwd(), 'spec.md')
+  destination: path.join(process.cwd(), 'spec.md'),
+  // mode: 'markdown' // 'html' or 'markdown'
 }))
 ```
 

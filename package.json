@@ -1,6 +1,6 @@
 {
   "name": "jasmine-markdown-reporter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Jasmine Markdown Reporter",
   "main": "index.js",
   "scripts": {
