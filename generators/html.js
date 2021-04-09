@@ -1,3 +1,4 @@
+
 /**
 Copyright [2020] [Binod Nirvan](http://linkedin.com/in/binodnirvan)
 
@@ -15,28 +16,30 @@ limitations under the License.
 */
 
 const fs = require('fs').promises
-const literals = require('./literals/en.json')
+const literals = require('../literals/en.json')
 
-const passedFlag = `![${literals.passed}](https://via.placeholder.com/12/0dd969/000000?text=+)`
-const failedFlag = `![${literals.failed}](https://via.placeholder.com/12/f54977/000000?text=+)`
+const passedImage = `<img alt="${literals.passed}" src="https://via.placeholder.com/12/0dd969/000000?text=+" style="max-width:100%;">`
 const failedImage = `<img alt="${literals.failed}" src="https://via.placeholder.com/12/f54977/000000?text=+" style="max-width:100%;">`
 
 class Generator {
-  constructor (title, data, filePath) {
+  constructor (data, options) {
+    const { title, destination } = options
+
     this.title = title
     this.data = data
-    this.filePath = filePath
+    this.filePath = destination
+
     this.contents = []
   }
 
   generateTest (i, test, displaySuite) {
     const { description, duration, status, failedExpectations, suite } = test
-    const flag = status === 'passed' ? passedFlag : failedFlag
+    const flag = status === 'passed' ? passedImage : failedImage
 
-    this.contents.push(`${flag} ${i}. ${description} (${duration}ms)`)
+    this.contents.push(`\t<li>\n\t\t${flag} ${i}. ${description} (${duration}ms)\n\t</li>`)
 
     if (displaySuite) {
-      this.contents.push(`**${literals.suite}: ${suite}**`)
+      this.contents.push(`<strong>${literals.suite}: ${suite}</strong>`)
     }
 
     const info = []
@@ -54,22 +57,26 @@ class Generator {
         }
       }
 
-      this.contents.push('\n```')
+      this.contents.push('\n')
+      this.contents.push('```')
       this.contents.push(info.join('\n'))
-      this.contents.push('```\n')
+      this.contents.push('```')
+      this.contents.push('\n')
     }
   }
 
   generateSuite (suite) {
     const { description, duration } = suite
-    this.contents.push(`\n## ${description} (${duration / 1000}s)\n`)
+    this.contents.push(`\n<h2>${description} (${duration / 1000}s)</h2>\n`)
 
     let i = 0
 
+    this.contents.push('<ul>')
     for (const test of suite.tests) {
       i++
       this.generateTest(i, test)
     }
+    this.contents.push('</ul>')
   }
 
   generateSummary () {
@@ -86,11 +93,14 @@ class Generator {
       this.contents.push('\t</tr>')
     }
 
-    this.contents.push(`\n## ${literals.summary}\n`)
+    this.contents.push(`\n<h2>${literals.summary}</h2>\n`)
     this.contents.push('<table>')
 
     const { overallStatus } = this.data
-    const failedTests = this.data.suites.map(x => x.tests).flat().filter(x => x.failedExpectations && x.failedExpectations.length)
+    const failedTests = this.data.suites
+      .map((x) => x.tests)
+      .flat()
+      .filter((x) => x.failedExpectations && x.failedExpectations.length)
     const status = overallStatus === 'failed' ? `${failedImage} ${failedTests.length} failed` : overallStatus
 
     addRow(`${literals.suites}`, this.data.suites.length)
@@ -101,18 +111,20 @@ class Generator {
     this.contents.push('</table>\n')
 
     if (failedTests.length) {
-      this.contents.push(`## ${literals.whatFailed}\n`)
+      this.contents.push(`<h3>${literals.whatFailed}</h3>\n`)
       let i = 0
 
+      this.contents.push('<ul>')
       for (const failed of failedTests) {
         i++
         this.generateTest(i, failed, true)
       }
+      this.contents.push('</ul>')
     }
   }
 
   generate () {
-    this.contents.push(`# ${this.title}`)
+    this.contents.push(`<h1>${this.title}</h1>`)
 
     for (const suite of this.data.suites) {
       this.generateSuite(suite)

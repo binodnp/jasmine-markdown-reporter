@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 const path = require('path')
-const Generator = require('./generator')
+const generators = require('./generators')
 const literals = require('./literals/en.json')
 
 class MarkdownReporter {
@@ -34,6 +34,7 @@ class MarkdownReporter {
     this.totalTests = 0
     this.suites = []
     this.lastSuite = ''
+    this.html = (options.mode || '').toString().toLowerCase() === 'html' || false
   }
 
   jasmineStarted (suite) {
@@ -55,7 +56,7 @@ class MarkdownReporter {
   }
 
   suiteDone (suite) {
-    const found = this.suites.find(x => x.id === suite.id)
+    const found = this.suites.find((x) => x.id === suite.id)
 
     found.duration = suite.duration
     found.status = suite.status
@@ -65,7 +66,7 @@ class MarkdownReporter {
   }
 
   specDone (spec) {
-    const found = this.suites.find(x => x.id === this.lastSuite)
+    const found = this.suites.find((x) => x.id === this.lastSuite)
 
     found.tests.push({
       id: spec.id,
@@ -93,9 +94,8 @@ class MarkdownReporter {
       suites: this.suites
     }
 
-    const { title, destination } = this.options
-
-    const generator = new Generator(title, result, destination)
+    const Mode = this.html ? generators.html : generators.markdown
+    const generator = new Mode(result, this.options)
     await generator.write()
   }
 }
