@@ -17,8 +17,8 @@ limitations under the License.
 const fs = require('fs').promises
 const literals = require('../literals/en.json')
 
-const passedFlag = `![${literals.passed}](https://via.placeholder.com/12/0dd969/000000?text=+)`
-const failedFlag = `![${literals.failed}](https://via.placeholder.com/12/f54977/000000?text=+)`
+const passedFlag = `![${literals.passed}]✔️`
+const failedFlag = `![${literals.failed}]❌`
 const failedImage = `<img alt="${literals.failed}" src="https://via.placeholder.com/12/f54977/000000?text=+" style="max-width:100%;">`
 
 class Generator {
